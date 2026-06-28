@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vera Silvya — AI Evaluator Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1117;
+    --ink-soft: #3a3d47;
+    --ink-muted: #7a7e8a;
+    --paper: #f7f6f2;
+    --paper-warm: #eeeae0;
+    --accent: #1a5c8a;
+    --accent-light: #e8f0f7;
+    --rule: #d8d4c8;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(247,246,242,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-name {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 2.5rem 5rem;
+    max-width: 960px; margin: 0 auto;
+  }
+  .hero-inner { max-width: 720px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block; width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink-soft);
+    background: white;
+  }
+  .badge.highlight {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .contact-line {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+  .contact-line a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .contact-line a:hover { text-decoration: underline; }
+
+  /* SECTION LAYOUT */
+  section {
+    max-width: 960px; margin: 0 auto;
+    padding: 5rem 2.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3rem;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+  }
+  p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+  /* COMPETENCY GRID */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .comp-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 1.75rem;
+    border-radius: 3px;
+    position: relative;
+  }
+  .comp-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent);
+    border-radius: 3px 3px 0 0;
+  }
+  .comp-number {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+  }
+  .comp-card p { font-size: 0.88rem; line-height: 1.6; margin: 0; }
+
+  /* EXPERIENCE BLOCK */
+  .exp-block {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .exp-meta {
+    padding-top: 0.15rem;
+  }
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .exp-tenure {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .exp-content h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.65;
+  }
+  .exp-bullets li:last-child { border-bottom: none; }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+
+  /* LANGUAGE SECTION */
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .lang-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    border-radius: 3px;
+  }
+  .lang-name {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+  }
+  .lang-level {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .lang-bar-bg {
+    height: 3px; background: var(--rule); border-radius: 2px; margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+  .lang-bar { height: 100%; background: var(--accent); border-radius: 2px; }
+  .lang-note { font-size: 0.8rem; color: var(--ink-muted); margin: 0; }
+
+  /* CREDENTIALS */
+  .cred-list { margin-top: 2rem; }
+  .cred-item {
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cred-item:last-child { border-bottom: none; }
+  .cred-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--accent-light);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .cred-body h3 { font-size: 0.92rem; margin-bottom: 0.2rem; }
+  .cred-body p { font-size: 0.8rem; color: var(--ink-muted); margin: 0; }
+  .cred-link {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .cred-link:hover { text-decoration: underline; }
+
+  /* WHAT I BRING CALLOUT */
+  .callout {
+    background: var(--ink);
+    color: white;
+    padding: 3rem;
+    border-radius: 3px;
+    margin-top: 2rem;
+  }
+  .callout h2 { color: white; font-size: 1.6rem; margin-bottom: 1.25rem; }
+  .callout p { color: rgba(255,255,255,0.75); font-size: 0.92rem; line-height: 1.75; margin: 0; }
+  .callout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .callout-item {
+    background: rgba(255,255,255,0.06);
+    padding: 1rem 1.25rem;
+    border-radius: 2px;
+    border-left: 2px solid var(--accent);
+  }
+  .callout-item p {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+  }
+  .callout-item strong {
+    display: block;
+    font-size: 0.82rem;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .exp-block { grid-template-columns: 1fr; gap: 0.75rem; }
+    .callout { padding: 2rem 1.5rem; }
+    .callout-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">Vera Silvya</span>
+  <ul class="nav-links">
+    <li><a href="#competencies">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#languages">Languages</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">AI Evaluator — Indonesian Language Specialist</div>
+    <h1>Structured thinking.<br><em>Precise evaluation.</em><br>Native fluency.</h1>
+    <p class="hero-lead">
+      12+ years of rigorous analytical work at Nokia Networks Indonesia — monitoring performance, detecting anomalies, writing defensible rationales — now applied to AI output evaluation. Native Indonesian speaker. C2 English. Remote-ready.
+    </p>
+    <div class="hero-badges">
+      <span class="badge highlight">Indonesian — Native</span>
+      <span class="badge highlight">English — C2 Proficient</span>
+      <span class="badge">EF SET 82/100</span>
+      <span class="badge">12+ Years Nokia Networks</span>
+      <span class="badge">Remote — Indonesia</span>
+      <span class="badge">ITB Engineering Graduate</span>
+    </div>
+    <p class="contact-line">
+      verasilvya99@gmail.com &nbsp;·&nbsp; +62-819-5712-0539 &nbsp;·&nbsp;
+      <a href="https://cert.efset.org/ni1oLw" target="_blank" rel="noopener">EF SET Certificate ↗</a>
+    </p>
+  </div>
+</div>
+
+<!-- COMPETENCIES -->
+<section id="competencies">
+  <div class="section-label">What I do</div>
+  <h2>Core competencies for AI evaluation</h2>
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-number">01</div>
+      <h3>Structured quality review</h3>
+      <p>12+ years of daily KPI monitoring — flagging anomalies, documenting findings, and writing traceable rationales against defined performance criteria.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">02</div>
+      <h3>Side-by-side evaluation and ranking</h3>
+      <p>Consistently evaluated competing network configurations, selecting optimal outcomes and writing defensible justifications tied to specific data points.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">03</div>
+      <h3>Ambiguity assessment</h3>
+      <p>Assessed network signal behaviour against multi-variable benchmarks, distinguishing genuine root-cause issues from minor, insignificant fluctuations.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">04</div>
+      <h3>Written rationale and annotation</h3>
+      <p>Produced client-facing quality reports with explicit citations of evidence, referencing exactly where in a session or data set each issue occurred.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">05</div>
+      <h3>Visual and spatial data analysis</h3>
+      <p>Used MapInfo GIS daily to generate coverage plots, polygon overlays, and geo-maps — evaluating quality across geographic and multi-dimensional data sets.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">06</div>
+      <h3>Data hygiene and session integrity</h3>
+      <p>Maintained strict parameter control and evaluation-session isolation to prevent cross-contamination of test environments and results.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">07</div>
+      <h3>Multi-turn scenario interpretation</h3>
+      <p>Experienced reading through layered technical scenarios and tracing how earlier decisions affect downstream outcomes — directly applicable to conversational AI evaluation.</p>
+    </div>
+    <div class="comp-card">
+      <div class="comp-number">08</div>
+      <h3>Independent remote operation</h3>
+      <p>12+ years of self-directed professional work in a global organisation. Comfortable with asynchronous collaboration and 24-hour team structures.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALLOUT -->
+<section style="padding-top: 0; border-top: none;">
+  <div class="callout">
+    <h2>Why this background transfers to AI evaluation</h2>
+    <p>Network performance monitoring and AI output evaluation share the same cognitive core: compare outputs against defined criteria, detect deviations, investigate root causes, and document findings with precision. The subject matter has changed; the discipline has not.</p>
+    <div class="callout-grid">
+      <div class="callout-item">
+        <strong>Then: KPI anomaly detection</strong>
+        <p>Now: Identifying hallucinations, poor inferences, and forced or unwarranted AI outputs</p>
+      </div>
+      <div class="callout-item">
+        <strong>Then: Competing configuration ranking</strong>
+        <p>Now: Side-by-side model response evaluation with written justifications</p>
+      </div>
+      <div class="callout-item">
+        <strong>Then: Client-facing quality reports</strong>
+        <p>Now: Structured annotation rationales referencing specific turns or data points</p>
+      </div>
+      <div class="callout-item">
+        <strong>Then: Session isolation in test environments</strong>
+        <p>Now: Evaluation data hygiene — preventing contamination of real usage history</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Background</div>
+  <h2>Professional experience</h2>
+  <div class="exp-block">
+    <div class="exp-meta">
+      <div class="exp-company">Nokia Networks Indonesia</div>
+      <div class="exp-tenure">April 2005 – August 2017<br>12 years 4 months</div>
+    </div>
+    <div class="exp-content">
+      <h3>Network Planning and Optimisation Engineer</h3>
+      <ul class="exp-bullets">
+        <li>Monitored daily network KPIs across coverage, capacity, and quality dimensions — identifying anomalies, investigating root causes, and documenting findings with structured rationales for operator clients.</li>
+        <li>Evaluated competing network configurations side-by-side, ranking solutions by performance outcomes and writing defensible justifications tied to specific data points.</li>
+        <li>Used MapInfo GIS daily for visual spatial analysis — generating coverage plots, polygon overlays, and geo-maps to assess quality across geographic dimensions.</li>
+        <li>Operated NetAct planning tool to review and adjust model parameters, maintaining strict data integrity between evaluation sessions.</li>
+        <li>Conducted joint planning workshops with telecom operators, translating complex technical assessments into clear, client-appropriate language.</li>
+        <li>Produced detailed solution reports and quality documentation for cross-functional teams and external stakeholders.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages">
+  <div class="section-label">Languages</div>
+  <h2>Language proficiency</h2>
+  <div class="lang-grid">
+    <div class="lang-card">
+      <div class="lang-name">Indonesian</div>
+      <div class="lang-level">Native Speaker</div>
+      <div class="lang-bar-bg"><div class="lang-bar" style="width: 100%;"></div></div>
+      <p class="lang-note">Full professional, colloquial, and written fluency. Primary working language throughout career.</p>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">English</div>
+      <div class="lang-level">C2 Proficient — EF SET 82/100</div>
+      <div class="lang-bar-bg"><div class="lang-bar" style="width: 92%;"></div></div>
+      <p class="lang-note">Reading 80 · Listening 84. Certified May 2026. <a href="https://cert.efset.org/ni1oLw" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">View certificate ↗</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="section-label">Education and training</div>
+  <h2>Credentials</h2>
+  <div class="cred-list">
+    <div class="cred-item">
+      <div class="cred-icon">EDU</div>
+      <div class="cred-body">
+        <h3>Bachelor of Engineering — Telecommunication Engineering</h3>
+        <p>Bandung Institute of Technology (ITB) &nbsp;·&nbsp; 1999 – 2004<br>
+        One of Indonesia's top-ranked technical universities.</p>
+      </div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">CERT</div>
+      <div class="cred-body">
+        <h3>EF SET English Certificate — C2 Proficient</h3>
+        <p>Score: 82/100 (Reading 80, Listening 84) &nbsp;·&nbsp; Awarded May 2026<br>
+        <a href="https://cert.efset.org/ni1oLw" target="_blank" rel="noopener" class="cred-link">cert.efset.org/ni1oLw ↗</a></p>
+      </div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">TRN</div>
+      <div class="cred-body">
+        <h3>3G RAN Parameters and RNC Dimensioning</h3>
+        <p>Nokia Networks &nbsp;·&nbsp; Bangkok, Thailand &nbsp;·&nbsp; 2014</p>
+      </div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">TRN</div>
+      <div class="cred-body">
+        <h3>Project Management Fundamentals</h3>
+        <p>Jakarta, Indonesia &nbsp;·&nbsp; 2015</p>
+      </div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">TRN</div>
+      <div class="cred-body">
+        <h3>Negotiation and Presentation Skills</h3>
+        <p>Jakarta, Indonesia &nbsp;·&nbsp; 2010</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Vera Silvya &nbsp;·&nbsp; AI Evaluator — Indonesian Language Specialist &nbsp;·&nbsp; verasilvya99@gmail.com
+</footer>
+
+</body>
+</html>
